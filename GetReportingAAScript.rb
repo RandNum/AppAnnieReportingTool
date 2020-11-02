@@ -1,7 +1,7 @@
 # Based on http://www.jonathanleighton.com/articles/2011/awesome-active-record-bug-reports/ 
 
 # Run this script with `$ ruby GetReportingAAScript.rb`
-require 'sqlite3'
+require 'mysql2'
 require 'active_record'
 require "uri"
 require "net/http"
@@ -12,8 +12,11 @@ require "json"
 
 # Connect to an in-memory sqlite3 database
 ActiveRecord::Base.establish_connection(
-  adapter: 'sqlite3',
-  database: ':memory:'
+  adapter: 'mysql2',
+  host: 'localhost',
+  username: 'recorduser',
+  password: 'annie',
+  database: 'AAreportingDB'
 )
 
 # Define a minimal database schema
@@ -45,13 +48,16 @@ class Connection < ActiveRecord::Base
     belongs_to :report, inverse_of: :connections, required: true
 end
 
-#Create the report object
-report = Report.create!(name: 'new report')
-
-
 input_array = ARGV
 start_date = input_array[0]
 end_date = input_array[1]
+
+
+#Create the report object
+report = Report.create!(name: "Report#{start_date}to#{end_date}" )
+
+
+
 
 #puts "The Length of input_array is #{input_array.length}"
 
