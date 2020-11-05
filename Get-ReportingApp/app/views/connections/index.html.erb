@@ -1,16 +1,80 @@
 <head>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.0.0/css/searchBuilder.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.min.css">
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+<script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
+<script src="https://cdn.datatables.net/searchbuilder/1.0.0/js/dataTables.searchBuilder.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
+
+
 </head>
-<h1>Connections#index</h1>
-<p>app/views/connections/index.html.erb</p>
+<h1>Connections</h1>
+
 
 <script>
+
+
 $(document).ready( function () {
-    $('#table_id').DataTable();
+   var table = $('#table_id').DataTable({
+        rowGroup: {
+            dataSrc: [],
+    },
+    buttons:[
+        {
+            extend: 'searchBuilder',
+            config: {
+                depthLimit: 4
+            }
+        }
+        ,
+        'copy'
+    ],
+    dom: 'Qlfrtip',
+    searchBuilder: {
+        preDefined: {
+            criteria:[
+                {
+                    condition: 'between',
+                    data: 'date',
+                    value: []
+                }
+            ],
+            logic: 'AND',
+        }
+    },
+    dom: 'Bfrtip',
+}); //end DataTable();
+
+      $('#checkConnections').click(() => {
+         table.rowGroup().dataSrc(1);
+         console.log(1, "In #checkConnections")
+         console.log(2,table)
+         table.rowGroup().enable().draw();
+         
+     })
+
+
 } );
 </script>
+<%# <button id="groupByApp" type="checkbox">group by app</button> %>
+
+<script>
+
+
+</script>
+
+
+Connections: <input type="checkbox" id="checkConnections">
+<p id="text" style="display:none">Checkbox is CHECKED!</p>
 
 <table id="table_id" class="display">
     <thead>
