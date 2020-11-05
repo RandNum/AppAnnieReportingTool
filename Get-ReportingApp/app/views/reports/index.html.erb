@@ -1,2 +1,9 @@
 <h1>Reports#index</h1>
 <p>Find me in app/views/reports/index.html.erb</p>
+
+<ul>
+  <% @reports.each do |report| %>
+    <li><%= link_to report.name, report_url(report)  %></li>
+  <% end %>
+</ul>
+
