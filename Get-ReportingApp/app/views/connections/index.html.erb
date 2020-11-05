@@ -57,11 +57,27 @@ $(document).ready( function () {
       $('#checkConnections').click(() => {
          table.rowGroup().dataSrc(1);
          console.log(1, "In #checkConnections")
-         console.log(2,table)
          table.rowGroup().enable().draw();
          
      })
-
+        $('#checkApp').click(() => {
+         table.rowGroup().dataSrc(2);
+         console.log(2, "In #checkApp")
+         table.rowGroup().enable().draw();
+         
+     })
+        $('#checkPlatform').click(() => {
+         table.rowGroup().dataSrc(3);
+         console.log(3, "In #checkPatform")
+         table.rowGroup().enable().draw();
+         
+     })
+        $('#checkCountry').click(() => {
+         table.rowGroup().dataSrc(4);
+         console.log(4, "In #checkCountry")
+         table.rowGroup().enable().draw();
+         
+     })
 
 } );
 </script>
@@ -74,7 +90,9 @@ $(document).ready( function () {
 
 
 Connections: <input type="checkbox" id="checkConnections">
-<p id="text" style="display:none">Checkbox is CHECKED!</p>
+App: <input type="checkbox" id="checkApp">
+Platform: <input type="checkbox" id="checkPlatform">
+Country: <input type="checkbox" id="checkCountry">
 
 <table id="table_id" class="display">
     <thead>
@@ -82,10 +100,12 @@ Connections: <input type="checkbox" id="checkConnections">
             <th>Name</th>
             <th>Connection Type</th>
             <th>App</th>
+            <th>Platform</th>
             <th>Country</th>
             <th>Date</th>
             <th>Impressions</th>
             <th>Ad Revenue</th>
+            <th>CPM</th>
         </tr>
     </thead>
     <tbody>  
@@ -94,10 +114,12 @@ Connections: <input type="checkbox" id="checkConnections">
                     <td><%=connection.name%></td>
                     <td><%=connection.connection%></td>
                     <td><%=connection.app%></td>
+                    <td><%=connection.platform%></td>
                     <td><%=connection.country%></td>
                     <td><%=connection.date%></td>
                     <td><%=connection.impressions%></td>
                     <td><%=connection.ad_revenue%></td>
+                    <td><%=connection.cpm%></td>
                 </tr>
             <% end %>
     </tbody>

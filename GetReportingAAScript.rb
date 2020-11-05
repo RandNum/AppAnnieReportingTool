@@ -30,11 +30,12 @@ ActiveRecord::Schema.define do
     t.string :name #at least a simple iterator based on number of connections
     t.string :connection
     t.string :app
+    t.string :platform
     t.string :country
     t.date :date
     t.decimal :impressions
     t.decimal :ad_revenue
-
+    t.decimal :cpm
     t.belongs_to :report, index: true
   end
 end
@@ -83,15 +84,21 @@ loop do
       # Create all of the connection objects from this page...
       count = 0
       connectionsParsed.each do |i|
+          adrev = i["ad_revenue"]
+          impres = i["impressions"].to_d 
+          cpm = adrev/(impres/1000.0)
+          puts "adrev is #{adrev} and impres is #{impres} and cpm is #{cpm}"
           count+=1
           report.connections.create!(
               name: "connection #{count}",         #at least a simple iterator based on number of connections
               connection: i["connection"],
               app: i["app"],
+              platform: i["platform"],
               country: i["country"],
               date: i["date"],
               impressions: i["impressions"],
-              ad_revenue: i["ad_revenue"]
+              ad_revenue: i["ad_revenue"],
+              cpm: cpm
           )
         end
       puts "Added #{count} connections from this page"
@@ -103,8 +110,8 @@ loop do
   end
 
 
-connectionsDateQuery = Connection.where(:date => "2020-01-02".."2020-01-05" ).order(:app)
-puts "Query test shows connectionsDeQuery returned #{connectionsDateQuery.size} reults"
+connectionsDateQuery = Connection.where(:date => "2020-05-01".."2020-05-010" ).order(:app)
+puts "Query test shows connectionsDateQuery returned #{connectionsDateQuery.size} reults"
 
 
 
