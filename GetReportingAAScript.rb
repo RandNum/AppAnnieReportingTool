@@ -103,6 +103,10 @@ loop do
   end
 
 
+connectionsDateQuery = Connection.where(:date => "2020-01-02".."2020-01-05" ).order(:app)
+puts "Query test shows connectionsDeQuery returned #{connectionsDateQuery.size} reults"
+
+
 
 connectionTypes = report.connections.pluck(:connection)
 #puts "#{report.name} has #{report.connections.size} connections with connection types, #{connectionTypes.join(', ')}"
