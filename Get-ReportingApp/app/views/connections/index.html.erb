@@ -1,0 +1,40 @@
+<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+</head>
+<h1>Connections#index</h1>
+<p>app/views/connections/index.html.erb</p>
+
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Connection Type</th>
+            <th>App</th>
+            <th>Country</th>
+            <th>Date</th>
+            <th>Impressions</th>
+            <th>Ad Revenue</th>
+        </tr>
+    </thead>
+    <tbody>  
+            <% @connections.each do |connection| %>
+                <tr>
+                    <td><%=connection.name%></td>
+                    <td><%=connection.connection%></td>
+                    <td><%=connection.app%></td>
+                    <td><%=connection.country%></td>
+                    <td><%=connection.date%></td>
+                    <td><%=connection.impressions%></td>
+                    <td><%=connection.ad_revenue%></td>
+                </tr>
+            <% end %>
+    </tbody>
+</table>
