@@ -84,7 +84,7 @@ loop do
       # Create all of the connection objects from this page...
       count = 0
       connectionsParsed.each do |i|
-          adrev = i["ad_revenue"]
+          adrev = i["ad_revenue"].to_d
           impres = i["impressions"].to_d 
           cpm = adrev/(impres/1000.0)
           puts "adrev is #{adrev} and impres is #{impres} and cpm is #{cpm}"
@@ -102,6 +102,7 @@ loop do
           )
         end
       puts "Added #{count} connections from this page"
+      #puts "CPM is #{report.connections.pluck("cpm").to_s}"
     if reportParsed["next_page_url"] == ""
       break
     end
