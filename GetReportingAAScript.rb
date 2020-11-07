@@ -31,8 +31,8 @@ today = Time.now.strftime("%Y-%m-%d")
 @report = Report.create!(name: "Report-#{@start_date}-#{@end_date}" )
 
 def reportOucome
-  connectionsDateQuery = Connection.where(:date => @start_date..@end_date ).order(:app)
-  puts "Query test shows connectionsDateQuery returned #{connectionsDateQuery.size} reults"
+  count = Connection.where(:date => @start_date..@end_date ).where(:report => @report.id).count
+  puts "Ingested #{count} reults"
 end
 
 def findNextUrl(response)
