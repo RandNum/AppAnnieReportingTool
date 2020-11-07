@@ -1,3 +1,3 @@
 class Connection < ApplicationRecord
-  belongs_to :report
+  belongs_to :report, inverse_of: :connections
 end

@@ -1,38 +1,29 @@
-#initialize the database with Data from AppAnnie Reporting API
+# Add data to database with Data from AppAnnie Reporting API
 
-# Run this script with `$ ruby GetReportingAAScript.rb`
 require 'mysql2'
 require 'active_record'
 require "uri"
 require "net/http"
 require "json"
+require 'date'
 
+require_relative 'Get-ReportingApp/app/models/application_record'
+require_relative 'Get-ReportingApp/app/models/report'
+require_relative "Get-ReportingApp/app/models/connection"
 
-    # Connect to an in-memory sqlite3 database
-    ActiveRecord::Base.establish_connection(
-      adapter: 'mysql2',
-      host: 'localhost',
-      username: 'recorduser',
-      password: 'annie',
-      database: 'AAreportingDB'
-    )
-
-    # Define the models
-    class Report < ActiveRecord::Base
-        has_many :connections, inverse_of: :report
-    end
-
-    class Connection < ActiveRecord::Base
-        belongs_to :report, inverse_of: :connections, required: true
-    end
-
+# Connect to an in-memory sqlite3 database
+ActiveRecord::Base.establish_connection(
+  adapter: 'mysql2',
+  host: 'localhost',
+  username: 'recorduser',
+  password: 'annie',
+  database: 'AAreportingDB'
+)
 
 input_array = ARGV
-start_date = input_array[0]
-end_date = input_array[1]
-
-
-#puts "The Length of input_array is #{input_array.length}"
+today = Time.now.strftime("%Y-%m-%d")
+start_date = input_array[0] == nil ? today : input_array[0]
+end_date = input_array[1] == nil ? today : input_array[1]
 
 # Create the connection and get the reporting data:
 url = URI("https://api.libring.com/v2/reporting/get\
@@ -51,7 +42,6 @@ loop do
       reportParsed = JSON.parse(response.read_body)
       connectionsParsed = reportParsed['connections']
       #puts "The number of connections is #{connectionsParsed.size}"
-
 
       # Create all of the connection objects from this page...
       count = 0
