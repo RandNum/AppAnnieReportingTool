@@ -54,7 +54,7 @@ def processConnection(connection, count)
   #puts "adrev is #{adrev} and impres is #{impres} and cpm is #{cpm}"
   count+=1
   @report.connections.create!(
-      name: "connection #{count}",         #at least a simple iterator based on number of connections
+      name: @report.name,         #at least a simple iterator based on number of connections
       connection: connection["connection"],
       app: connection["app"],
       platform: connection["platform"],
