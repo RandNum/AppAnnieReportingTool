@@ -23,11 +23,11 @@ end
 input_array = ARGV
 start_date = input_array[0]
 end_date = input_array[1]
+demensions = input_array[2]
 
+file = "AAexport.csv"
 
-file = "#{Rails.root}/AAexport.csv"
-
-connections = Connection.order(:date)
+connections = Connection.where(:date=>start_date..end_date).order(:date)
 
 headers = ["Name", "Connection Type", "App", "Platform", "Country", "Date", "Impressions", "Ad Revenue", "CPM"]
 
