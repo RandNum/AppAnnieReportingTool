@@ -2,6 +2,10 @@ require 'csv'
 require 'mysql2'
 require 'active_record'
 
+require_relative 'Get-ReportingApp/app/models/application_record'
+require_relative 'Get-ReportingApp/app/models/report'
+require_relative "Get-ReportingApp/app/models/connection"
+
 # Connect to an in-memory sqlite3 database
 ActiveRecord::Base.establish_connection(
     adapter: 'mysql2',
@@ -10,15 +14,6 @@ ActiveRecord::Base.establish_connection(
     password: 'annie',
     database: 'AAreportingDB'
 )
-
-# Define the models
-class Report < ActiveRecord::Base
-    has_many :connections, inverse_of: :report
-end
-
-class Connection < ActiveRecord::Base
-    belongs_to :report, inverse_of: :connections, required: true
-end
 
 input_array = ARGV
 start_date = input_array[0]
