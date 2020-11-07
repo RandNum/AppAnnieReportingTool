@@ -8,7 +8,6 @@ require "net/http"
 require "json"
 
 
-class InitializeDB
     # Connect to an in-memory sqlite3 database
     ActiveRecord::Base.establish_connection(
       adapter: 'mysql2',
@@ -26,7 +25,6 @@ class InitializeDB
     class Connection < ActiveRecord::Base
         belongs_to :report, inverse_of: :connections, required: true
     end
-end
 
 
 input_array = ARGV
@@ -61,7 +59,7 @@ loop do
           adrev = i["ad_revenue"].to_d
           impres = i["impressions"].to_d 
           cpm = adrev/(impres/1000.0)
-          puts "adrev is #{adrev} and impres is #{impres} and cpm is #{cpm}"
+          #puts "adrev is #{adrev} and impres is #{impres} and cpm is #{cpm}"
           count+=1
           report.connections.create!(
               name: "connection #{count}",         #at least a simple iterator based on number of connections
@@ -85,7 +83,7 @@ loop do
   end
 
 
-connectionsDateQuery = Connection.where(:date => "2020-05-01".."2020-05-010" ).order(:app)
+connectionsDateQuery = Connection.where(:date => start_date..end_date ).order(:app)
 puts "Query test shows connectionsDateQuery returned #{connectionsDateQuery.size} reults"
 
 
