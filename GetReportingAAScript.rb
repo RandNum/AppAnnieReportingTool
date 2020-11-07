@@ -26,20 +26,13 @@ today = Time.now.strftime("%Y-%m-%d")
 @start_date = input_array[0] == nil ? today : input_array[0]
 @end_date = input_array[1] == nil ? today : input_array[1]
 
-@initial_fetch_url = "https://api.libring.com/v2/reporting/get\
+initial_fetch_url = "https://api.libring.com/v2/reporting/get\
 ?period=custom_date&start_date=#{@start_date}&end_date=#{@end_date}&data_type=adnetwork,acquisition&allow_mock=true&group_by=app,platform,country,connection"
 @report = Report.create!(name: "Report-#{@start_date}-#{@end_date}" )
 
-def reportOucome
-  count = Connection.where(:date => @start_date..@end_date ).where(:report => @report.id).count
-  puts "Ingested #{count} reults"
-end
+
 
 def findNextUrl(response)
-  if response == nil
-    return @initial_fetch_url
-  end
-
   return response["next_page_url"] == nil ? "" : response["next_page_url"]
 end
 
@@ -66,16 +59,18 @@ def processConnection(connection, count)
   )
 end
 
-url = URI(@initial_fetch_url)
+def reportOucome
+  count = Connection.where(:date => @start_date..@end_date ).where(:report => @report.id).count
+  puts "Ingested #{count} reults"
+end
+
+url = URI(initial_fetch_url)
 https = Net::HTTP.new(url.host, url.port)
 https.use_ssl = true
 
-#handle pagination and create connection objects
-response = nil
-
-while findNextUrl(response).length > 0
-  puts "Going to next page url at #{findNextUrl(response)}" 
-  request = Net::HTTP::Get.new(findNextUrl(response))
+loop do
+  puts "Going to next page url at #{url}" 
+  request = Net::HTTP::Get.new(url)
   addAuthHeader(request)
 
   response = JSON.parse(https.request(request).read_body)
@@ -88,6 +83,9 @@ while findNextUrl(response).length > 0
   end
 
   puts "Added #{connectionsParsed.length} connections from this page"
+
+  url = findNextUrl(response)
+  break if url.length == 0
 end
 
 reportOucome()
