@@ -78,8 +78,8 @@ while findNextUrl(response).length > 0
   request = Net::HTTP::Get.new(findNextUrl(response))
   addAuthHeader(request)
 
-  response = https.request(request)
-  connectionsParsed = JSON.parse(response.read_body)['connections']
+  response = JSON.parse(https.request(request).read_body)
+  connectionsParsed = response['connections']
 
   # Create all of the connection objects from this page...
   count = 0
