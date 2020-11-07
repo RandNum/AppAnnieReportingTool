@@ -1,7 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  Report: one
+  name: MyString
+  connection: MyString
+  app: MyString
+  platform: MyString
+  country: MyString
+  date: 2020-11-07
+  impressions: 9.99
+  ad_revenue: 9.99
+  cpm: 9.99
+  report: one
 
 two:
-  Report: two
+  name: MyString
+  connection: MyString
+  app: MyString
+  platform: MyString
+  country: MyString
+  date: 2020-11-07
+  impressions: 9.99
+  ad_revenue: 9.99
+  cpm: 9.99
+  report: two

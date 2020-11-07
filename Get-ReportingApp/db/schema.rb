@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_11_07_175947) do
 
   create_table "connections", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -21,13 +21,18 @@ ActiveRecord::Schema.define(version: 0) do
     t.date "date"
     t.decimal "impressions", precision: 10
     t.decimal "ad_revenue", precision: 10
-    t.decimal "cpm"
-    t.bigint "report_id"
+    t.decimal "cpm", precision: 10
+    t.bigint "report_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["report_id"], name: "index_connections_on_report_id"
   end
 
   create_table "reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "connections", "reports"
 end
