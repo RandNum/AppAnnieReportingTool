@@ -16,10 +16,12 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "name"
     t.string "connection"
     t.string "app"
+    t.string "platform"
     t.string "country"
     t.date "date"
     t.decimal "impressions", precision: 10
     t.decimal "ad_revenue", precision: 10
+    t.decimal "cpm"
     t.bigint "report_id"
     t.index ["report_id"], name: "index_connections_on_report_id"
   end
