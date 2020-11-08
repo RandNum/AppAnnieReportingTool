@@ -66,7 +66,7 @@ $(document).ready( function () {
      })
         $('#checkApp').click((event) => {
          
-            table.rowGroup().dataSrc([2]);
+            table.rowGroup().dataSrc([2,3,4]);
             console.log(2, "In #checkApp")
             table.rowGroup().enable().draw();
        
@@ -74,7 +74,7 @@ $(document).ready( function () {
      })
         $('#checkPlatform').click((event) => {
          if(event.target.checked){
-            table.rowGroup().dataSrc([3]);
+            table.rowGroup().dataSrc([]);
             console.log(3, "In #checkPatform")
             table.rowGroup().enable().draw();
          } else {
