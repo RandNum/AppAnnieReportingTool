@@ -54,28 +54,42 @@ $(document).ready( function () {
     dom: 'Bfrtip',
 }); //end DataTable();
 
-      $('#checkConnections').click(() => {
-         table.rowGroup().dataSrc(1);
-         console.log(1, "In #checkConnections")
-         table.rowGroup().enable().draw();
+      $('#checkConnections').click((event) => {
+        
+            table.rowGroup().dataSrc([1]);
+            console.log(1, "In #checkConnections", event)
+            table.rowGroup().enable().draw();
+        
+         
+             //table.rowGroup().disable().draw();
          
      })
-        $('#checkApp').click(() => {
-         table.rowGroup().dataSrc(2);
-         console.log(2, "In #checkApp")
-         table.rowGroup().enable().draw();
+        $('#checkApp').click((event) => {
+         
+            table.rowGroup().dataSrc([2]);
+            console.log(2, "In #checkApp")
+            table.rowGroup().enable().draw();
+       
          
      })
-        $('#checkPlatform').click(() => {
-         table.rowGroup().dataSrc(3);
-         console.log(3, "In #checkPatform")
-         table.rowGroup().enable().draw();
+        $('#checkPlatform').click((event) => {
+         if(event.target.checked){
+            table.rowGroup().dataSrc([3]);
+            console.log(3, "In #checkPatform")
+            table.rowGroup().enable().draw();
+         } else {
+             //table.rowGroup().disable().draw();
+         }
          
      })
-        $('#checkCountry').click(() => {
-         table.rowGroup().dataSrc(4);
-         console.log(4, "In #checkCountry")
-         table.rowGroup().enable().draw();
+        $('#checkCountry').click((event) => {
+         if(event.target.checked){
+            table.rowGroup().dataSrc([4]);
+            console.log(4, "In #checkCountry")
+            table.rowGroup().enable().draw();
+         } else {
+             //table.rowGroup().disable().draw();
+         }
          
      })
 
@@ -117,9 +131,9 @@ Country: <input type="checkbox" id="checkCountry">
                     <td><%=connection.platform%></td>
                     <td><%=connection.country%></td>
                     <td><%=connection.date%></td>
-                    <td><%=connection.impressions%></td>
-                    <td><%=connection.ad_revenue%></td>
-                    <td><%=connection.cpm%></td>
+                    <td><%=connection.impressions.to_d%></td>
+                    <td><%=connection.ad_revenue.to_d%></td>
+                    <td><%=connection.cpm.to_d%></td>
                 </tr>
             <% end %>
     </tbody>

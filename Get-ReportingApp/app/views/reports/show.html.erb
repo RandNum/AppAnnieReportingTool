@@ -1,2 +1,126 @@
-<h1>Reports#show</h1>
-<p>Find me in app/views/reports/show.html.erb</p>
+<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.0.0/css/searchBuilder.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.min.css">
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+<script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
+<script src="https://cdn.datatables.net/searchbuilder/1.0.0/js/dataTables.searchBuilder.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
+
+
+</head>
+<h1>Connections</h1>
+
+
+<script>
+
+
+$(document).ready( function () {
+   var table = $('#table_id').DataTable({
+        rowGroup: {
+            dataSrc: [],
+    },
+    buttons:[
+        {
+            extend: 'searchBuilder',
+            config: {
+                depthLimit: 4
+            }
+        }
+        ,
+        'copy'
+    ],
+    dom: 'Qlfrtip',
+    searchBuilder: {
+        preDefined: {
+            criteria:[
+                {
+                    condition: 'between',
+                    data: 'date',
+                    value: []
+                }
+            ],
+            logic: 'AND',
+        }
+    },
+    dom: 'Bfrtip',
+}); //end DataTable();
+
+      $('#checkConnections').click((event) => {
+         table.rowGroup().dataSrc(1);
+         console.log(1, event)
+         table.rowGroup().enable().draw();
+         
+     })
+        $('#checkApp').click(() => {
+         table.rowGroup().dataSrc(2);
+         console.log(2, "In #checkApp")
+         table.rowGroup().enable().draw();
+         
+     })
+        $('#checkPlatform').click(() => {
+         table.rowGroup().dataSrc(3);
+         console.log(3, "In #checkPatform")
+         table.rowGroup().enable().draw();
+         
+     })
+        $('#checkCountry').click(() => {
+         table.rowGroup().dataSrc(4);
+         console.log(4, "In #checkCountry")
+         table.rowGroup().enable().draw();
+         
+     })
+
+} );
+</script>
+<%# <button id="groupByApp" type="checkbox">group by app</button> %>
+
+<script>
+
+
+</script>
+
+
+Connections: <input type="checkbox" id="checkConnections">
+App: <input type="checkbox" id="checkApp">
+Platform: <input type="checkbox" id="checkPlatform">
+Country: <input type="checkbox" id="checkCountry">
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Connection Type</th>
+            <th>App</th>
+            <th>Platform</th>
+            <th>Country</th>
+            <th>Date</th>
+            <th>Impressions</th>
+            <th>Ad Revenue</th>
+            <th>CPM</th>
+        </tr>
+    </thead>
+    <tbody>  
+            <% @connections.each do |connection| %>
+                <tr>
+                    <td><%=connection.name%></td>
+                    <td><%=connection.connection%></td>
+                    <td><%=connection.app%></td>
+                    <td><%=connection.platform%></td>
+                    <td><%=connection.country%></td>
+                    <td><%=connection.date%></td>
+                    <td><%=connection.impressions%></td>
+                    <td><%=connection.ad_revenue%></td>
+                    <td><%=connection.cpm%></td>
+                </tr>
+            <% end %>
+    </tbody>
+</table>

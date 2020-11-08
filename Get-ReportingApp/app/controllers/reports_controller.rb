@@ -5,6 +5,11 @@ class ReportsController < ApplicationController
   end
 
   def show
+    id = params[:id]
+    puts "id is #{id}"
+    @connections = Connection.where(:report => id)
+    thisconnection = Connection.find(1)
+    puts "thisconnection cpm is #{thisconnection.cpm}"
   end
 
   def new

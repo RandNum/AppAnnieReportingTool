@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2020_11_07_175947) do
     t.string "platform"
     t.string "country"
     t.date "date"
-    t.decimal "impressions", precision: 10
-    t.decimal "ad_revenue", precision: 10
-    t.decimal "cpm", precision: 10
+    t.integer "impressions"
+    t.decimal "ad_revenue", precision: 10, scale: 2
+    t.decimal "cpm", precision: 10, scale: 2
     t.bigint "report_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

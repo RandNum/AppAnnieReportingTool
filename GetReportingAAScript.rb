@@ -53,8 +53,8 @@ def processConnection(connection, count)
       platform: connection["platform"],
       country: connection["country"],
       date: connection["date"],
-      impressions: connection["impressions"],
-      ad_revenue: connection["ad_revenue"],
+      impressions: connection["impressions"].to_d,
+      ad_revenue: connection["ad_revenue"].to_d,
       cpm: cpm
   )
 end
