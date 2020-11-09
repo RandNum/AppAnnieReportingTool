@@ -19,14 +19,11 @@
 </head>
 <h1>Connections</h1>
 
-
 <script>
-
-
 $(document).ready( function () {
    var table = $('#table_id').DataTable({
         rowGroup: {
-            dataSrc: [],
+            //dataSrc: [],
     },
     buttons:[
         {
@@ -35,64 +32,84 @@ $(document).ready( function () {
                 depthLimit: 4
             }
         }
-        ,
-        'copy'
     ],
+    
+    "pageLength": 100,
+
     dom: 'Qlfrtip',
     searchBuilder: {
         preDefined: {
             criteria:[
                 {
                     condition: 'between',
-                    data: 'date',
+                    data: 'Date',
                     value: []
                 }
             ],
             logic: 'AND',
         }
     },
-    dom: 'Bfrtip',
+    //dom: 'Bfrtip',
 }); //end DataTable();
 
-      $('#checkConnections').click((event) => {
-         table.rowGroup().dataSrc(1);
-         console.log(1, event)
-         table.rowGroup().enable().draw();
+var getChecboxesState = () => {
+    var connections = $('#checkConnections').prop('checked')
+    var app = $('#checkApp').prop('checked')
+    var platform = $('#checkPlatform').prop('checked')
+    var country = $('#checkCountry').prop('checked')
+
+    var columnsIndicesToInclude = [
+        ...(connections ? [1] : []),
+        ...(app ? [2] : []),
+        ...(platform ? [3] : []),
+        ...(country ? [4] : []),
+    ];
+    return columnsIndicesToInclude;
+}
+
+
+$('#checkConnections, #checkApp, #checkPlatform, #checkCountry').click(() => {
+    var indicesToInclude = getChecboxesState();
+    console.log('indicesToInclude', indicesToInclude)
+    table.rowGroup().dataSrc(indicesToInclude);
+    table.rowGroup().enable().draw();
+})
+
+    //   $('#checkConnections').click((event) => {
+    //      table.rowGroup().dataSrc(1);
+    //      console.log(1, event)
+    //      table.rowGroup().enable().draw();
          
-     })
-        $('#checkApp').click(() => {
-         table.rowGroup().dataSrc(2);
-         console.log(2, "In #checkApp")
-         table.rowGroup().enable().draw();
+    //  })
+    //     $('#checkApp').click(() => {
+    //      table.rowGroup().dataSrc(2);
+    //      console.log(2, "In #checkApp")
+    //      table.rowGroup().enable().draw();
          
-     })
-        $('#checkPlatform').click(() => {
-         table.rowGroup().dataSrc(3);
-         console.log(3, "In #checkPatform")
-         table.rowGroup().enable().draw();
+    //  })
+    //     $('#checkPlatform').click(() => {
+    //      table.rowGroup().dataSrc(3);
+    //      console.log(3, "In #checkPatform")
+    //      table.rowGroup().enable().draw();
          
-     })
-        $('#checkCountry').click(() => {
-         table.rowGroup().dataSrc(4);
-         console.log(4, "In #checkCountry")
-         table.rowGroup().enable().draw();
+    //  })
+    //     $('#checkCountry').click(() => {
+    //      table.rowGroup().dataSrc(4);
+    //      console.log(4, "In #checkCountry")
+    //      table.rowGroup().enable().draw();
          
-     })
+    //  })
 
 } );
 </script>
 <%# <button id="groupByApp" type="checkbox">group by app</button> %>
 
-<script>
 
-
-</script>
-
-
-Connections: <input type="checkbox" id="checkConnections">
-App: <input type="checkbox" id="checkApp">
-Platform: <input type="checkbox" id="checkPlatform">
-Country: <input type="checkbox" id="checkCountry">
+<span><b>Group by:</b></span><br>
+<label for="checkConnections">Connections</label> <input type="checkbox" id="checkConnections"><br>
+App: <input type="checkbox" id="checkApp"><br>
+Platform: <input type="checkbox" id="checkPlatform"><br>
+Country: <input type="checkbox" id="checkCountry"><br>
 
 <table id="table_id" class="display">
     <thead>

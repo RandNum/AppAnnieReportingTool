@@ -40,12 +40,12 @@ def addAuthHeader(request)
   request["Authorization"] = "Token DHDwhdFXfoGBYLPOZPvTTwJoS"
 end
 
-def processConnection(connection, count)
+def processConnection(connection)
   adrev = connection["ad_revenue"].to_d
   impres = connection["impressions"].to_d 
   cpm = adrev/(impres/1000.0)
   #puts "adrev is #{adrev} and impres is #{impres} and cpm is #{cpm}"
-  count+=1
+  
   @report.connections.create!(
       name: @report.name,         #at least a simple iterator based on number of connections
       connection: connection["connection"],
@@ -77,9 +77,22 @@ loop do
   connectionsParsed = response['connections']
 
   # Create all of the connection objects from this page...
-  count = 0
-  connectionsParsed.each do |conn|
-    processConnection(conn, count)
+  begin
+    connectionsParsed.each do |conn|
+      processConnection(conn)
+    end
+  rescue NoMethodError => e 
+    puts "invalid input" 
+    puts "Dates must be in 'YYYY-MM-DD' format."
+    puts "Please use valid date format"
+    Report.find(@report.id).destroy
+    Report.find(3).destroy
+    Report.find(4).destroy
+    Report.find(5).destroy
+    Report.find(6).destroy
+    Report.find(7).destroy
+    exit!
+  rescue SystemExit
   end
 
   puts "Added #{connectionsParsed.length} connections from this page"
