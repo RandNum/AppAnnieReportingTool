@@ -1,22 +1,4 @@
-<head>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.0.0/css/searchBuilder.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.min.css">
 
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-<script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
-<script src="https://cdn.datatables.net/searchbuilder/1.0.0/js/dataTables.searchBuilder.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
-<script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
-
-
-</head>
 <h1>Connections</h1>
 
 <script>
@@ -49,9 +31,20 @@ $(document).ready( function () {
             logic: 'AND',
         }
     },
-    //dom: 'Bfrtip',
-}); //end DataTable();
+    
+    // endRender: function ( rows, group ) {
+    //     var avg = rows
+    //         .data()
+    //         .pluck('cpm')
+    //         .reduce( function (a, b) {
+    //             return a + b.replace(/[^\d]/g, '')*1;
+    //         }, 0) / rows.count();
 
+    //     return 'Average CPM in '+group+': '+
+    //         $.fn.dataTable.render.number(',', '.', 0, '$').display( avg );
+    // }
+    
+} );
 var getChecboxesState = () => {
     var connections = $('#checkConnections').prop('checked')
     var app = $('#checkApp').prop('checked')
@@ -75,35 +68,9 @@ $('#checkConnections, #checkApp, #checkPlatform, #checkCountry').click(() => {
     table.rowGroup().enable().draw();
 })
 
-    //   $('#checkConnections').click((event) => {
-    //      table.rowGroup().dataSrc(1);
-    //      console.log(1, event)
-    //      table.rowGroup().enable().draw();
-         
-    //  })
-    //     $('#checkApp').click(() => {
-    //      table.rowGroup().dataSrc(2);
-    //      console.log(2, "In #checkApp")
-    //      table.rowGroup().enable().draw();
-         
-    //  })
-    //     $('#checkPlatform').click(() => {
-    //      table.rowGroup().dataSrc(3);
-    //      console.log(3, "In #checkPatform")
-    //      table.rowGroup().enable().draw();
-         
-    //  })
-    //     $('#checkCountry').click(() => {
-    //      table.rowGroup().dataSrc(4);
-    //      console.log(4, "In #checkCountry")
-    //      table.rowGroup().enable().draw();
-         
-    //  })
+}); //end DataTable();
 
-} );
 </script>
-<%# <button id="groupByApp" type="checkbox">group by app</button> %>
-
 
 <span><b>Group by:</b></span><br>
 <label for="checkConnections">Connections</label> <input type="checkbox" id="checkConnections"><br>
